@@ -1,0 +1,35 @@
+services:
+  router:
+    image: ghcr.io/apollographql/router:v1.22.0
+    ports:
+      - 4000:4000
+      - 9090:9090
+    volumes:
+      - ./router.yaml:/dist/config/router.yaml
+      - ./supergraph.graphql:/dist/config/supergraph.graphql
+    command:
+      - --config
+      - /dist/config/router.yaml
+      - --supergraph
+      - /dist/config/supergraph.graphql
+  subgraph-a:
+    image: ghcr.io/apollosolutions/apollo-server-with-mocks:main
+    volumes:
+      - ./subgraph-a.graphql:/app/schema.graphql
+    environment:
+      - PORT=4001
+    ports:
+      - 4001:4001
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9000:9090
+    volumes:
+      - ./prometheus:/etc/prometheus
+    command: --web.enable-lifecycle  --config.file=/etc/prometheus/prometheus.yml
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3001:3000
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources

@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=router.config.json
+sandbox:
+  enabled: true
+homepage:
+  enabled: false
+supergraph:
+  listen: 0.0.0.0:4000
+  introspection: true
+include_subgraph_errors:
+  all: true
+plugins:
+  experimental.expose_query_plan: true
+telemetry:
+  metrics:
+    prometheus:
+      enabled: true
+      listen: 0.0.0.0:9090
