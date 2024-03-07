@@ -1,3 +1,3 @@
 # Enterprise Testing Course content repo
 
-TODO: add link to course
+https://www.apollographql.com/tutorials/testing
